@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Isal Electronics | PCB Design & Embedded Systems</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#050908;
+  --bg-2:#0a120e;
+  --panel:#0d1a13;
+  --line:#182a1f;
+  --emerald:#2fbf71;
+  --emerald-dim:#1f8a52;
+  --copper:#c97b4a;
+  --text:#edf2ef;
+  --muted:#7a9488;
+  --faint:#3d5448;
+  --display:'Space Grotesk',sans-serif;
+  --mono:'JetBrains Mono',monospace;
+  --body:'Inter',sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{background:var(--bg);color:var(--text);font-family:var(--body);line-height:1.6;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+
+/* ========== NAV — ultra-minimal ========== */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:22px 5vw;
+  mix-blend-mode:normal;
+  transition:background .4s,border-color .4s;
+}
+nav.scrolled{
+  background:rgba(5,9,8,.82);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--line);
+}
+.brand{
+  font-family:var(--display);font-weight:700;font-size:1.15rem;
+  letter-spacing:-.01em;color:var(--text);
+}
+.brand b{color:var(--emerald)}
+.navlinks{display:flex;gap:36px;font-size:.85rem;font-weight:500}
+.navlinks a{color:rgba(255,255,255,.45);transition:color .2s;letter-spacing:.02em}
+.navlinks a:hover{color:var(--text)}
+.nav-hire{
+  font-family:var(--mono);font-size:.78rem;
+  background:var(--emerald);color:#04120a;
+  padding:9px 18px;border-radius:5px;font-weight:700;
+  transition:all .2s;
+}
+.nav-hire:hover{background:#3ed480}
+.burger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:0}
+.burger span{width:22px;height:1.5px;background:var(--text);transition:.3s}
+
+/* ========== HERO — type-behind-photo ========== */
+.hero{
+  position:relative;
+  width:100%;
+  height:100vh;
+  min-height:600px;
+  overflow:hidden;
+  background:#000;
+}
+
+/* giant background word */
+.hero-word{
+  position:absolute;
+  top:30%;left:50%;
+  transform:translate(-50%,-50%);
+  font-family:var(--display);
+  font-weight:700;
+  font-size:clamp(90px,20vw,250px);
+  line-height:.88;
+  letter-spacing:-.04em;
+  color:#fff;
+  opacity:.10;
+  white-space:nowrap;
+  user-select:none;
+  z-index:1;
+  pointer-events:none;
+}
+
+/* photo fills the frame */
+.hero-photo{
+  position:absolute;
+  inset:0;
+  z-index:2;
+  display:flex;align-items:center;justify-content:center;
+}
+.hero-photo img{
+  width:100%;height:100%;
+  object-fit:cover;
+  object-position:72% center;
+  display:block;
+}
+/* placeholder grid when no photo */
+.hero-photo-placeholder{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:16px;
+  background-image:
+    linear-gradient(rgba(47,191,113,.06) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(47,191,113,.06) 1px,transparent 1px);
+  background-size:40px 40px;
+}
+.hero-photo-placeholder .drop-label{
+  font-family:var(--mono);font-size:.82rem;letter-spacing:.1em;
+  color:var(--emerald);
+  background:rgba(5,9,8,.7);
+  border:1px solid var(--emerald-dim);
+  padding:10px 22px;border-radius:6px;
+}
+.hero-photo-placeholder .drop-sub{
+  font-family:var(--mono);font-size:.7rem;
+  color:var(--faint);letter-spacing:.06em;
+}
+
+/* gradient overlay — darkens left (for copy) and bottom (for ticker), photo bg already dark */
+.hero-overlay{
+  position:absolute;inset:0;z-index:3;
+  background:
+    linear-gradient(to right,
+      rgba(5,9,8,.92) 0%,
+      rgba(5,9,8,.55) 30%,
+      rgba(5,9,8,.05) 55%,
+      rgba(5,9,8,0) 75%),
+    linear-gradient(to bottom,
+      rgba(5,9,8,.4) 0%,
+      rgba(5,9,8,0) 25%,
+      rgba(5,9,8,0) 55%,
+      rgba(5,9,8,.9) 100%);
+  pointer-events:none;
+}
+
+/* nav-area top fade so nav stays readable */
+.hero-top-fade{
+  position:absolute;top:0;left:0;right:0;height:140px;z-index:4;
+  background:linear-gradient(to bottom,rgba(0,0,0,.6),transparent);
+  pointer-events:none;
+}
+
+/* hero copy — left-anchored, vertically centered editorial block */
+.hero-copy{
+  position:absolute;
+  top:50%;left:5vw;
+  transform:translateY(-50%);
+  z-index:5;
+  max-width:560px;
+}
+.hero-copy .tagline{
+  font-family:var(--mono);
+  font-size:clamp(.72rem,.9vw,.86rem);
+  letter-spacing:.1em;
+  color:var(--emerald);
+  text-transform:uppercase;
+  margin-bottom:18px;
+  display:flex;align-items:center;gap:10px;
+}
+.hero-copy .tagline::before{
+  content:"";width:28px;height:1px;background:var(--emerald);display:inline-block;
+}
+.hero-copy h1{
+  font-family:var(--display);
+  font-weight:700;
+  font-size:clamp(2rem,5vw,3.6rem);
+  line-height:1.05;
+  letter-spacing:-.03em;
+  color:#fff;
+  margin-bottom:22px;
+}
+.hero-copy h1 span{color:var(--emerald)}
+.hero-copy .sub{
+  font-family:var(--body);
+  font-size:clamp(.95rem,1.4vw,1.08rem);
+  color:var(--muted);
+  max-width:420px;
+  line-height:1.6;
+  margin-bottom:32px;
+}
+.hero-cta{display:flex;gap:12px;flex-wrap:wrap}
+.btn{
+  font-family:var(--mono);font-size:.82rem;font-weight:500;
+  padding:13px 24px;border-radius:5px;
+  transition:all .22s;
+  display:inline-flex;align-items:center;gap:8px;
+  border:1px solid transparent;
+  cursor:pointer;
+}
+.btn-primary{background:var(--emerald);color:#04120a;font-weight:700}
+.btn-primary:hover{background:#3ed480;transform:translateY(-1px)}
+.btn-ghost{border-color:rgba(255,255,255,.25);color:#fff}
+.btn-ghost:hover{border-color:var(--emerald);color:var(--emerald)}
+
+/* scrolling ticker at bottom edge */
+.hero-ticker{
+  position:absolute;bottom:0;left:0;right:0;z-index:6;
+  overflow:hidden;
+  border-top:1px solid rgba(255,255,255,.07);
+  padding:10px 0;
+  background:rgba(0,0,0,.45);
+  backdrop-filter:blur(4px);
+}
+.ticker-track{
+  display:flex;gap:0;
+  white-space:nowrap;
+  animation:ticker 28s linear infinite;
+  width:max-content;
+}
+.ticker-track span{
+  font-family:var(--mono);font-size:.72rem;
+  color:var(--faint);letter-spacing:.12em;text-transform:uppercase;
+  padding:0 40px;
+}
+.ticker-track .dot{color:var(--emerald);padding:0}
+@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ========== SECTIONS ========== */
+section{padding:88px 5vw;position:relative}
+.sec-tag{
+  font-family:var(--mono);font-size:.72rem;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--copper);
+  margin-bottom:14px;display:block;
+}
+.sec-head{margin-bottom:56px;max-width:640px}
+.sec-head h2{
+  font-family:var(--display);font-weight:700;
+  font-size:clamp(1.8rem,3.5vw,2.7rem);
+  letter-spacing:-.025em;line-height:1.08;margin-bottom:16px;
+}
+.sec-head p{color:var(--muted);font-size:1.02rem}
+
+/* ========== SERVICES ========== */
+#services{background:var(--bg-2)}
+.svc-grid{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:1px;background:var(--line);
+  border:1px solid var(--line);border-radius:12px;overflow:hidden;
+}
+.svc{background:var(--panel);padding:36px 28px;transition:background .25s}
+.svc:hover{background:#0f2119}
+.svc-num{font-family:var(--mono);font-size:.72rem;color:var(--copper);margin-bottom:20px;letter-spacing:.1em}
+.svc-ic{width:34px;height:34px;margin-bottom:18px;stroke:var(--emerald);stroke-width:1.4;fill:none}
+.svc h3{font-family:var(--display);font-size:1.18rem;font-weight:600;margin-bottom:10px}
+.svc p{color:var(--muted);font-size:.92rem;line-height:1.6}
+
+/* ========== PROCESS ========== */
+.phases{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.phase{
+  display:grid;grid-template-columns:160px 1fr;
+  align-items:start;padding:32px 28px;
+  background:var(--panel);
+  transition:background .25s;
+}
+.phase:hover{background:#0f2119}
+.ph-label{font-family:var(--mono);font-size:.72rem;color:var(--emerald);letter-spacing:.08em}
+.ph-num{font-family:var(--display);font-size:3rem;font-weight:700;color:var(--faint);line-height:1;margin-top:4px}
+.phase h3{font-family:var(--display);font-size:1.18rem;font-weight:600;margin-bottom:8px}
+.phase p{color:var(--muted);font-size:.92rem;line-height:1.6}
+.phase-badge{
+  display:inline-block;margin-top:10px;
+  font-family:var(--mono);font-size:.65rem;letter-spacing:.08em;
+  color:var(--faint);border:1px solid var(--line);
+  padding:3px 9px;border-radius:4px;
+}
+
+/* ========== WORK — image-first ========== */
+#work{background:var(--bg-2)}
+
+/* Featured card — full-width horizontal */
+.work-featured{
+  display:grid;
+  grid-template-columns:1.1fr .9fr;
+  border:1px solid var(--line);
+  border-radius:12px;overflow:hidden;
+  background:var(--panel);
+  margin-bottom:24px;
+  transition:border-color .3s;
+}
+.work-featured:hover{border-color:var(--emerald-dim)}
+.work-featured .feat-img{
+  position:relative;
+  min-height:320px;
+  background:#000;
+  overflow:hidden;
+}
+.work-featured .feat-img img{
+  width:100%;height:100%;object-fit:cover;
+  transition:transform .6s ease;
+}
+.work-featured:hover .feat-img img{transform:scale(1.04)}
+.feat-img-placeholder{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;
+  background-image:
+    linear-gradient(rgba(47,191,113,.05) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(47,191,113,.05) 1px,transparent 1px);
+  background-size:32px 32px;
+}
+.feat-img-placeholder .pi-label{
+  font-family:var(--mono);font-size:.75rem;letter-spacing:.08em;
+  color:var(--emerald-dim);
+  background:rgba(5,9,8,.75);border:1px solid var(--line);
+  padding:6px 14px;border-radius:4px;
+}
+.feat-badge{
+  position:absolute;top:14px;left:14px;
+  font-family:var(--mono);font-size:.68rem;letter-spacing:.06em;
+  background:rgba(5,9,8,.85);border:1px solid var(--line);
+  color:var(--emerald);padding:4px 10px;border-radius:4px;
+  backdrop-filter:blur(6px);
+}
+.work-featured .feat-body{padding:40px 36px;display:flex;flex-direction:column;justify-content:center}
+.feat-kicker{font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--copper);margin-bottom:10px}
+.feat-body h3{font-family:var(--display);font-size:1.5rem;font-weight:700;letter-spacing:-.02em;margin-bottom:12px;line-height:1.15}
+.feat-body p{color:var(--muted);font-size:.94rem;line-height:1.6;margin-bottom:24px}
+.feat-stats{display:flex;gap:24px;margin-bottom:24px;flex-wrap:wrap}
+.feat-stats .fs{font-family:var(--mono);font-size:.75rem;color:var(--faint)}
+.feat-stats .fs b{color:var(--text);display:block;font-size:.85rem;margin-bottom:2px}
+.tags{display:flex;flex-wrap:wrap;gap:7px}
+.tag{font-family:var(--mono);font-size:.68rem;padding:4px 10px;border:1px solid var(--line);border-radius:4px;color:var(--faint)}
+
+/* Grid of 3 cards below */
+.work-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.wcard{background:var(--panel);display:flex;flex-direction:column;transition:background .3s}
+.wcard:hover{background:#0f2119}
+.wcard-img{
+  position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;background:#000;
+  border-bottom:1px solid var(--line);
+}
+.wcard-img img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+.wcard:hover .wcard-img img{transform:scale(1.05)}
+.wcard-img-placeholder{
+  position:absolute;inset:0;
+  display:flex;align-items:center;justify-content:center;
+  background-image:
+    linear-gradient(rgba(47,191,113,.04) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(47,191,113,.04) 1px,transparent 1px);
+  background-size:24px 24px;
+}
+.wcard-img-placeholder .wpi{
+  font-family:var(--mono);font-size:.68rem;letter-spacing:.08em;
+  color:var(--emerald-dim);background:rgba(5,9,8,.8);
+  border:1px solid var(--line);padding:5px 12px;border-radius:4px;
+}
+.wcard-badge{
+  position:absolute;top:10px;right:10px;
+  font-family:var(--mono);font-size:.65rem;
+  background:rgba(5,9,8,.85);border:1px solid var(--line);
+  color:var(--emerald);padding:3px 8px;border-radius:4px;
+}
+.wcard-body{padding:20px 22px 24px;flex:1;display:flex;flex-direction:column}
+.wcard-kicker{font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--copper);margin-bottom:7px}
+.wcard-body h3{font-family:var(--display);font-size:1.06rem;font-weight:600;margin-bottom:7px;line-height:1.2}
+.wcard-body p{color:var(--muted);font-size:.88rem;line-height:1.55;flex:1;margin-bottom:14px}
+.wcard-stats{display:flex;gap:14px;margin-bottom:12px;flex-wrap:wrap}
+.wcard-stats .ws{font-family:var(--mono);font-size:.7rem;color:var(--faint)}
+.wcard-stats .ws b{color:var(--text);display:block;font-size:.76rem;margin-bottom:1px}
+
+/* ========== ABOUT — photo-forward ========== */
+#about{}
+.about-wrap{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+
+/* Left: photo takes entire left half */
+.about-photo{
+  position:relative;
+  min-height:560px;
+  background:#000;
+  overflow:hidden;
+}
+.about-photo img{
+  width:100%;height:100%;
+  object-fit:cover;object-position:center top;
+  display:block;
+}
+.about-photo-placeholder{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;
+  background-image:
+    linear-gradient(rgba(47,191,113,.05) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(47,191,113,.05) 1px,transparent 1px);
+  background-size:30px 30px;
+}
+.about-photo-placeholder .initials{
+  width:96px;height:96px;border-radius:50%;
+  background:linear-gradient(135deg,var(--emerald-dim),#0a2a17);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--display);font-weight:700;font-size:2.2rem;color:#edf2ef;
+  border:1.5px solid var(--emerald-dim);
+}
+.about-photo-placeholder .pp-label{
+  font-family:var(--mono);font-size:.75rem;letter-spacing:.08em;
+  color:var(--emerald-dim);background:rgba(5,9,8,.8);
+  border:1px solid var(--line);padding:6px 16px;border-radius:4px;
+}
+/* overlay gradient from left */
+.about-photo-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to right,transparent 70%,rgba(5,9,8,.9));
+  pointer-events:none;
+}
+/* name watermark over photo */
+.about-photo-name{
+  position:absolute;bottom:28px;left:24px;
+  font-family:var(--display);font-weight:700;
+  font-size:clamp(1.1rem,2vw,1.6rem);letter-spacing:-.02em;
+  color:#fff;text-shadow:0 2px 16px rgba(0,0,0,.7);
+}
+.about-photo-name small{
+  display:block;font-family:var(--mono);font-size:.72rem;
+  font-weight:400;color:var(--emerald);letter-spacing:.1em;
+  text-transform:uppercase;margin-bottom:5px;
+  text-shadow:none;
+}
+
+/* Right: info panel */
+.about-info{
+  background:var(--panel);
+  padding:48px 40px;
+  display:flex;flex-direction:column;justify-content:center;
+}
+.about-info h2{
+  font-family:var(--display);font-weight:700;
+  font-size:clamp(1.5rem,2.5vw,2rem);
+  letter-spacing:-.025em;margin-bottom:18px;line-height:1.1;
+}
+.about-info p{color:var(--muted);font-size:.96rem;line-height:1.65;margin-bottom:14px}
+.about-creds{display:flex;flex-direction:column;gap:10px;margin:22px 0;font-family:var(--mono);font-size:.82rem}
+.about-creds div{display:flex;gap:10px;align-items:flex-start;color:var(--text);line-height:1.4}
+.about-creds .arr{color:var(--emerald);flex:none;margin-top:2px}
+.founder-stats{
+  display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;
+  margin:24px 0;
+  padding:20px 0;
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+}
+.founder-stats .s b{
+  font-family:var(--display);font-size:1.6rem;
+  color:var(--emerald);display:block;line-height:1;
+}
+.founder-stats .s span{
+  font-family:var(--mono);font-size:.68rem;
+  color:var(--faint);text-transform:uppercase;letter-spacing:.06em;
+}
+.stack-row{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0}
+.chip{
+  font-family:var(--mono);font-size:.76rem;
+  padding:7px 13px;border:1px solid var(--line);
+  border-radius:5px;color:var(--muted);transition:all .2s;
+}
+.chip:hover{border-color:var(--emerald-dim);color:var(--text)}
+.founder-links{display:flex;gap:10px;flex-wrap:wrap;margin-top:4px}
+.founder-links a{
+  font-family:var(--mono);font-size:.76rem;
+  color:var(--muted);border:1px solid var(--line);
+  padding:7px 14px;border-radius:5px;transition:all .2s;
+}
+.founder-links a:hover{border-color:var(--emerald);color:var(--emerald)}
+
+/* ========== CTA ========== */
+#contact{
+  text-align:center;
+  background:var(--bg);
+  border-top:1px solid var(--line);
+}
+.cta-inner{max-width:640px;margin:0 auto}
+.cta-inner h2{
+  font-family:var(--display);font-weight:700;
+  font-size:clamp(2rem,5vw,3.2rem);
+  letter-spacing:-.03em;margin-bottom:18px;line-height:1.05;
+}
+.cta-inner h2 span{color:var(--emerald)}
+.cta-inner p{color:var(--muted);font-size:1.05rem;margin-bottom:34px;line-height:1.65}
+.cta-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+
+/* ========== FOOTER ========== */
+footer{
+  padding:40px 5vw;
+  border-top:1px solid var(--line);
+  display:flex;justify-content:space-between;align-items:center;
+  flex-wrap:wrap;gap:16px;
+  font-size:.82rem;color:var(--faint);
+}
+footer .fbrand{font-family:var(--display);font-weight:700;color:var(--text);font-size:.95rem}
+footer a:hover{color:var(--emerald)}
+
+/* ========== REVEAL ========== */
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease}
+.reveal.in{opacity:1;transform:none}
+
+/* ========== RESPONSIVE ========== */
+@media(max-width:1180px){
+  .svc-grid{grid-template-columns:repeat(3,1fr)}
+}
+@media(max-width:960px){
+  .work-featured{grid-template-columns:1fr}
+  .work-featured .feat-img{min-height:260px}
+  .work-grid{grid-template-columns:1fr 1fr}
+  .about-wrap{grid-template-columns:1fr}
+  .about-photo{min-height:380px}
+  .about-info{padding:36px 28px}
+  .founder-stats{grid-template-columns:1fr 1fr}
+}
+@media(max-width:680px){
+  .navlinks{display:none}
+  .nav-hire{display:none}
+  .burger{display:flex}
+  .svc-grid{grid-template-columns:1fr}
+  nav.open .navlinks{
+    display:flex;position:absolute;top:100%;left:0;right:0;
+    flex-direction:column;background:rgba(5,9,8,.96);
+    padding:20px 5vw;border-bottom:1px solid var(--line);gap:18px;
+    backdrop-filter:blur(12px);
+  }
+  nav.open .nav-hire{display:block;margin:0 5vw 16px}
+  .work-grid{grid-template-columns:1fr}
+  .hero-copy{flex-direction:column;align-items:flex-start;bottom:80px}
+  .hero-copy .right{align-items:flex-start}
+  .hero-copy .sub{text-align:left}
+  .hero-cta{justify-content:flex-start}
+  .phase{grid-template-columns:1fr;gap:8px}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#top" class="brand">Isal <b>Electronics</b></a>
+  <div class="navlinks">
+    <a href="#services">Services</a>
+    <a href="#process">Process</a>
+    <a href="#work">Work</a>
+    <a href="#about">About</a>
+  </div>
+  <a href="https://www.fiverr.com/YOUR_USERNAME" target="_blank" rel="noopener" class="nav-hire">Hire on Fiverr →</a>
+  <button class="burger" id="burger"><span></span><span></span><span></span></button>
+</nav>
+
+<!-- HERO -->
+<header class="hero" id="top">
+
+  <!-- massive background word -->
+  <div class="hero-word">HARDWARE</div>
+
+  <!-- photo layer — replace placeholder with your board or portrait -->
+  <div class="hero-photo">
+    <img src="images/edwin-hero.jpg" alt="Edwin Ongoro Juma, Founder of Isal Electronics">
+
+  </div>
+
+  <div class="hero-overlay"></div>
+  <div class="hero-top-fade"></div>
+
+  <!-- left-anchored copy -->
+  <div class="hero-copy">
+    <div class="tagline">PCB Design · Embedded Systems · Nairobi</div>
+    <h1>From schematic to <span>manufacturing-ready</span> hardware.</h1>
+    <p class="sub">PCB design, embedded firmware, and product enclosures for startups and OEMs. International standards, East African accountability.</p>
+    <div class="hero-cta">
+      <a href="https://www.fiverr.com/YOUR_USERNAME" target="_blank" rel="noopener" class="btn btn-primary">Hire on Fiverr →</a>
+      <a href="#work" class="btn btn-ghost">See the work</a>
+    </div>
+  </div>
+
+  <!-- scrolling ticker -->
+  <div class="hero-ticker">
+    <div class="ticker-track">
+      <span>KiCad</span><span class="dot">·</span>
+      <span>Altium Designer</span><span class="dot">·</span>
+      <span>JLCPCB fab-ready</span><span class="dot">·</span>
+      <span>ESP32 · STM32 · nRF52</span><span class="dot">·</span>
+      <span>DFM / DFT review</span><span class="dot">·</span>
+      <span>LTspice simulation</span><span class="dot">·</span>
+      <span>IPC-A-610 workmanship</span><span class="dot">·</span>
+      <span>LCSC sourcing</span><span class="dot">·</span>
+      <!-- duplicate for seamless loop -->
+      <span>KiCad</span><span class="dot">·</span>
+      <span>Altium Designer</span><span class="dot">·</span>
+      <span>JLCPCB fab-ready</span><span class="dot">·</span>
+      <span>ESP32 · STM32 · nRF52</span><span class="dot">·</span>
+      <span>DFM / DFT review</span><span class="dot">·</span>
+      <span>LTspice simulation</span><span class="dot">·</span>
+      <span>IPC-A-610 workmanship</span><span class="dot">·</span>
+      <span>LCSC sourcing</span><span class="dot">·</span>
+    </div>
+  </div>
+</header>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="sec-head reveal">
+    <span class="sec-tag">What we do</span>
+    <h2>From circuit board to finished product.</h2>
+    <p>Every service is built to hand off cleanly to the next stage. Verified designs, complete documentation, no surprises at the factory.</p>
+  </div>
+  <div class="svc-grid reveal">
+    <div class="svc">
+      <div class="svc-num">01</div>
+      <svg class="svc-ic" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="1.5"/><path d="M7 21h10M9 18v3M15 18v3M7 9h4M7 13h7"/></svg>
+      <h3>PCB Design & Layout</h3>
+      <p>Multi-layer schematic capture and layout in KiCad, Altium, and Eagle, from 2-layer IoT boards to dense mixed-signal and RF designs.</p>
+    </div>
+    <div class="svc">
+      <div class="svc-num">02</div>
+      <svg class="svc-ic" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6v6H9z"/><path d="M9 2v2M15 2v2M9 20v2M15 20v2M2 9h2M2 15h2M20 9h2M20 15h2"/></svg>
+      <h3>Embedded Firmware</h3>
+      <p>Bring-up and firmware for ESP32, STM32, and nRF52 platforms: drivers, comms stacks, and hardware-software integration.</p>
+    </div>
+    <div class="svc">
+      <div class="svc-num">03</div>
+      <svg class="svc-ic" viewBox="0 0 24 24"><path d="M12 3v18M3 12h18M5.6 5.6l12.8 12.8M18.4 5.6L5.6 18.4"/><circle cx="12" cy="12" r="3.5"/></svg>
+      <h3>Product & Enclosure Design</h3>
+      <p>3D CAD enclosure design and photorealistic KeyShot renders, from sheet-metal housings to consumer product hero shots for listings and decks.</p>
+    </div>
+    <div class="svc">
+      <div class="svc-num">04</div>
+      <svg class="svc-ic" viewBox="0 0 24 24"><path d="M12 2v6M12 16v6M2 12h6M16 12h6"/><circle cx="12" cy="12" r="4"/></svg>
+      <h3>Turnkey Manufacturing</h3>
+      <p>Managed fabrication and assembly via JLCPCB/PCBWay with LCSC sourcing. Gerbers, BOM, and CPL handled end to end.</p>
+    </div>
+    <div class="svc">
+      <div class="svc-num">05</div>
+      <svg class="svc-ic" viewBox="0 0 24 24"><path d="M9 11l3 3 8-8"/><path d="M21 12v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h11"/></svg>
+      <h3>Design Audits & DFM</h3>
+      <p>Independent design review, DRC/ERC resolution, and design-for-manufacture checks to de-risk your board before you commit to a run.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process" style="background:var(--bg-2)">
+  <div class="sec-head reveal">
+    <span class="sec-tag">How we scale with you</span>
+    <h2>A studio built in phases.</h2>
+    <p>Isal Electronics grows from a design house into a full local manufacturing partner.</p>
+  </div>
+  <div class="phases reveal">
+    <div class="phase">
+      <div><div class="ph-label">Phase</div><div class="ph-num">01</div></div>
+      <div><h3>Design House</h3><p>Schematic, layout, and fabrication packages delivered to your factory of choice. Fastest path from idea to a board you can build anywhere.</p></div>
+    </div>
+    <div class="phase">
+      <div><div class="ph-label">Phase</div><div class="ph-num">02</div></div>
+      <div><h3>Turnkey Delivery</h3><p>We manage fabrication, component sourcing, and assembly so you receive working hardware, not a pile of files and a factory to chase.</p></div>
+    </div>
+    <div class="phase">
+      <div><div class="ph-label">Phase</div><div class="ph-num">03</div></div>
+      <div><h3>In-House Assembly</h3><p>Low-volume SMT and through-hole assembly in Nairobi for fast prototypes and small production runs, built to IPC-A-610 workmanship standards.</p><span class="phase-badge">coming soon</span></div>
+    </div>
+    <div class="phase">
+      <div><div class="ph-label">Phase</div><div class="ph-num">04</div></div>
+      <div><h3>Local Fabrication</h3><p>Bringing bare-board capability closer to East African hardware teams as demand scales.</p><span class="phase-badge">planned</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- WORK -->
+<!--
+  IMAGE SWAP GUIDE
+  ================
+  Featured card (.work-featured):
+    Replace the <div class="feat-img-placeholder">...</div> inside .feat-img with:
+    <img src="images/thermowatch-board.jpg" alt="ThermoWatch Pro v2.1">
+    Recommended size: 1200×800 px
+
+  Grid cards (.wcard):
+    Replace each <div class="wcard-img-placeholder">...</div> inside .wcard-img with:
+    <img src="images/YOUR-IMAGE.jpg" alt="PROJECT NAME">
+    Recommended size: 800×450 px (16:9), dark dramatic lighting.
+
+  KiCad 3D export: File > Export > Current View as PNG, then crop to 16:9.
+-->
+<section id="work">
+  <div class="sec-head reveal">
+    <span class="sec-tag">Selected work</span>
+    <h2>From circuit to enclosure.</h2>
+    <p>Design, embedded, and product work across IoT, sensing, power electronics, and consumer hardware.</p>
+  </div>
+
+  <!-- Featured -->
+  <div class="work-featured reveal">
+    <div class="feat-img">
+      <div class="feat-img-placeholder">
+        <div class="pi-label">Energy Hub render · 1200×800 px</div>
+      </div>
+      <span class="feat-badge">3D CAD · Studio Render</span>
+    </div>
+    <div class="feat-body">
+      <div class="feat-kicker">Industrial Design · Energy</div>
+      <h3>Energy Hub Enclosure</h3>
+      <p>Premium wall-mount energy storage enclosure in brushed dark aluminium, with a recessed top-panel display, full-height LED status strip, and dual side ventilation grilles for active thermal management. Modelled to product-ready standards and delivered as a photorealistic studio render for product listings, investor decks, and crowdfunding pages.</p>
+      <div class="feat-stats">
+        <div class="fs"><b>Brushed aluminium</b>finish</div>
+        <div class="fs"><b>Wall-mount</b>form factor</div>
+        <div class="fs"><b>Studio render</b>delivered</div>
+      </div>
+      <div class="tags">
+        <span class="tag">3D CAD</span><span class="tag">Product Render</span><span class="tag">Sheet Metal</span><span class="tag">Industrial Design</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- grid: real-image projects -->
+  <div class="work-grid reveal">
+
+    <div class="wcard">
+      <div class="wcard-img">
+        <img src="images/trapx-board.jpg" alt="TrapX Declenchement LoRa trap trigger board Rev 2.0">
+        <span class="wcard-badge">2-layer · KiCad</span>
+      </div>
+      <div class="wcard-body">
+        <div class="wcard-kicker">LoRa · Wildlife Monitoring</div>
+        <h3>TrapX Declenchement Rev 2.0</h3>
+        <p>2-layer LoRa remote trap trigger. 12V field supply through buck plus LDO into an STM32 and an EBYTE sub-GHz module, with SMA antenna, SWD and UART debug headers. 60 nets, zero unrouted, production-ready.</p>
+        <div class="wcard-stats">
+          <div class="ws"><b>STM32 + LoRa</b>core</div>
+          <div class="ws"><b>60 nets</b>0 unrouted</div>
+        </div>
+        <div class="tags"><span class="tag">KiCad</span><span class="tag">STM32</span><span class="tag">EBYTE LoRa</span><span class="tag">SMA</span></div>
+      </div>
+    </div>
+
+    <div class="wcard">
+      <div class="wcard-img">
+        <img src="images/water-pump.jpg" alt="Electric water dispenser pump product render">
+        <span class="wcard-badge">3D CAD · KeyShot</span>
+      </div>
+      <div class="wcard-body">
+        <div class="wcard-kicker">Product Design · Consumer</div>
+        <h3>Electric Water Dispenser Pump</h3>
+        <p>Compact electric bottle dispenser pump. Matte dark cylindrical body, ergonomic side spout, and a one-touch green activation cap with branded logo. Rendered as a dark studio hero shot for e-commerce and packaging.</p>
+        <div class="wcard-stats">
+          <div class="ws"><b>One-touch</b>operation</div>
+          <div class="ws"><b>Studio render</b>delivered</div>
+        </div>
+        <div class="tags"><span class="tag">3D CAD</span><span class="tag">KeyShot</span><span class="tag">Product Design</span></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ABOUT -->
+<!--
+  PHOTO SWAP
+  ==========
+  Replace the <div class="about-photo-placeholder">...</div> inside .about-photo with:
+  <img src="images/edwin-photo.jpg" alt="Edwin Ongoro Juma">
+  Recommended: 900×1100 px portrait, head-and-shoulders,
+  natural side lighting against a neutral/dark background.
+  The right-edge gradient overlay blends it into the info panel.
+-->
+<section id="about" style="background:var(--bg-2)">
+  <div class="sec-head reveal" style="max-width:100%">
+    <span class="sec-tag">The engineer behind it</span>
+  </div>
+  <div class="about-wrap reveal">
+    <!-- Photo -->
+    <div class="about-photo">
+      <img src="images/edwin-portrait.jpg" alt="Edwin Ongoro Juma">
+
+      <div class="about-photo-overlay"></div>
+      <div class="about-photo-name">
+        <small>Founder & Lead Engineer</small>
+        Edwin Ongoro Juma
+      </div>
+    </div>
+    <!-- Info -->
+    <div class="about-info">
+      <h2>Hardware and software, by one hand.</h2>
+      <p>Isal Electronics is founded by Edwin Ongoro Juma, an electrical and electronics engineer who designs the board and writes the firmware that runs on it. That full-stack view, from copper to code, is what keeps designs clean and bring-up fast.</p>
+      <p>Trained in Electrical & Electronics Engineering at Dedan Kimathi University of Technology and in software engineering through ALX Africa.</p>
+      <div class="about-creds">
+        <div><span class="arr">▹</span>BSc Electrical & Electronics Engineering, Dedan Kimathi University of Technology</div>
+        <div><span class="arr">▹</span>Software Engineering, ALX Africa</div>
+        <div><span class="arr">▹</span>Focus: PCB design, embedded systems, applied ML</div>
+      </div>
+      <div class="founder-stats">
+        <div class="s"><b>26+</b><span>Boards shipped</span></div>
+        <div class="s"><b>3</b><span>EDA toolchains</span></div>
+        <div class="s"><b>5+</b><span>Active clients</span></div>
+      </div>
+      <div class="stack-row">
+        <span class="chip">KiCad</span><span class="chip">Altium</span><span class="chip">Eagle</span>
+        <span class="chip">EasyEDA</span><span class="chip">LTspice</span><span class="chip">MATLAB</span>
+        <span class="chip">C / Python</span>
+      </div>
+      <div class="founder-links">
+        <a href="https://www.fiverr.com/YOUR_USERNAME" target="_blank" rel="noopener">Fiverr ↗</a>
+        <a href="https://github.com/Codejuma" target="_blank" rel="noopener">GitHub ↗</a>
+        <a href="https://www.linkedin.com/in/ongoro-juma-963325a9" target="_blank" rel="noopener">LinkedIn ↗</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="cta-inner reveal">
+    <span class="sec-tag" style="display:block;margin-bottom:14px">Let's build</span>
+    <h2>Have an idea that needs <span>building?</span></h2>
+    <p>From a single prototype to a production run, Isal Electronics takes it from schematic to something you can hold.</p>
+    <div class="cta-row">
+      <a href="https://www.fiverr.com/YOUR_USERNAME" target="_blank" rel="noopener" class="btn btn-primary">Hire on Fiverr →</a>
+      <a href="mailto:hello@tracewright.co.ke" class="btn btn-ghost">Get in touch</a>
+      <a href="https://github.com/Codejuma" target="_blank" rel="noopener" class="btn btn-ghost">View GitHub →</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <a href="#top" class="fbrand">Isal Electronics</a>
+  <span>PCB design, embedded systems & product design · Nairobi, Kenya</span>
+  <span>© <span id="yr"></span> Isal Electronics. All rights reserved.</span>
+</footer>
+
+<script>
+document.getElementById('yr').textContent = new Date().getFullYear();
+const nav = document.getElementById('nav');
+addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 40));
+document.getElementById('burger').addEventListener('click', () => nav.classList.toggle('open'));
+document.querySelectorAll('.navlinks a').forEach(a => a.addEventListener('click', () => nav.classList.remove('open')));
+const io = new IntersectionObserver(es => es.forEach(e => {
+  if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+}), { threshold: .1 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
