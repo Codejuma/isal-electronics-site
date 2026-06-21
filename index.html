@@ -4,6 +4,19 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Isal Electronics | PCB Design & Embedded Systems</title>
+<meta name="description" content="Isal Electronics designs PCBs, embedded firmware, and product enclosures for startups and OEMs. KiCad, Altium, and KeyShot, from schematic to manufacturing-ready hardware. Nairobi, Kenya.">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Isal Electronics | PCB Design & Embedded Systems">
+<meta property="og:description" content="PCB design, embedded firmware, and product enclosures for startups and OEMs. From schematic to manufacturing-ready hardware.">
+<meta property="og:image" content="https://isalelectronics.netlify.app/images/social-preview.jpg">
+<meta property="og:url" content="https://isalelectronics.netlify.app">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Isal Electronics | PCB Design & Embedded Systems">
+<meta name="twitter:description" content="PCB design, embedded firmware, and product enclosures. From schematic to manufacturing-ready hardware.">
+<meta name="twitter:image" content="https://isalelectronics.netlify.app/images/social-preview.jpg">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Inter:wght@400;500&display=swap" rel="stylesheet">
@@ -286,6 +299,9 @@ section{padding:88px 5vw;position:relative}
   transition:border-color .3s;
 }
 .work-featured:hover{border-color:var(--emerald-dim)}
+.work-featured + .work-featured{margin-top:24px}
+.work-featured.reverse{direction:rtl}
+.work-featured.reverse > *{direction:ltr}
 .work-featured .feat-img{
   position:relative;
   min-height:320px;
@@ -687,66 +703,46 @@ footer a:hover{color:var(--emerald)}
     <p>Design, embedded, and product work across IoT, sensing, power electronics, and consumer hardware.</p>
   </div>
 
-  <!-- Featured -->
+  <!-- Featured: TrapX -->
   <div class="work-featured reveal">
     <div class="feat-img">
-      <div class="feat-img-placeholder">
-        <div class="pi-label">Energy Hub render · 1200×800 px</div>
-      </div>
-      <span class="feat-badge">3D CAD · Studio Render</span>
+      <img src="images/trapx-board.jpg" alt="TrapX Declenchement LoRa trap trigger board Rev 2.0">
+      <span class="feat-badge">2-layer · KiCad</span>
     </div>
     <div class="feat-body">
-      <div class="feat-kicker">Industrial Design · Energy</div>
-      <h3>Energy Hub Enclosure</h3>
-      <p>Premium wall-mount energy storage enclosure in brushed dark aluminium, with a recessed top-panel display, full-height LED status strip, and dual side ventilation grilles for active thermal management. Modelled to product-ready standards and delivered as a photorealistic studio render for product listings, investor decks, and crowdfunding pages.</p>
+      <div class="feat-kicker">LoRa · Wildlife Monitoring</div>
+      <h3>TrapX Declenchement Rev 2.0</h3>
+      <p>2-layer LoRa remote trap trigger for a wildlife monitoring system. A 12V field supply steps down through a buck converter to 5V then an LDO to 3.3V, powering an STM32 microcontroller and an EBYTE sub-GHz LoRa module for long-range wireless triggering. SMA antenna, dedicated output terminal, plus SWD and UART headers for field debugging without disassembly.</p>
       <div class="feat-stats">
-        <div class="fs"><b>Brushed aluminium</b>finish</div>
-        <div class="fs"><b>Wall-mount</b>form factor</div>
-        <div class="fs"><b>Studio render</b>delivered</div>
+        <div class="fs"><b>STM32 + LoRa</b>core</div>
+        <div class="fs"><b>12V field</b>supply</div>
+        <div class="fs"><b>60 nets</b>0 unrouted</div>
       </div>
       <div class="tags">
-        <span class="tag">3D CAD</span><span class="tag">Product Render</span><span class="tag">Sheet Metal</span><span class="tag">Industrial Design</span>
+        <span class="tag">KiCad</span><span class="tag">STM32</span><span class="tag">EBYTE LoRa</span><span class="tag">SMA antenna</span><span class="tag">Buck + LDO</span>
       </div>
     </div>
   </div>
 
-  <!-- grid: real-image projects -->
-  <div class="work-grid reveal">
-
-    <div class="wcard">
-      <div class="wcard-img">
-        <img src="images/trapx-board.jpg" alt="TrapX Declenchement LoRa trap trigger board Rev 2.0">
-        <span class="wcard-badge">2-layer · KiCad</span>
+  <!-- Featured: Water Pump (reversed) -->
+  <div class="work-featured reverse reveal">
+    <div class="feat-img">
+      <img src="images/water-pump.jpg" alt="Electric water dispenser pump product render">
+      <span class="feat-badge">3D CAD · KeyShot</span>
+    </div>
+    <div class="feat-body">
+      <div class="feat-kicker">Product Design · Consumer</div>
+      <h3>Electric Water Dispenser Pump</h3>
+      <p>Compact electric bottle dispenser pump. Matte dark cylindrical body, an ergonomic side-extending spout, and a large one-touch activation cap with a bright green face and branded logo. Rendered as a dark studio hero shot suitable for e-commerce listings, packaging, and brand presentations.</p>
+      <div class="feat-stats">
+        <div class="fs"><b>One-touch</b>operation</div>
+        <div class="fs"><b>Matte finish</b>body</div>
+        <div class="fs"><b>Studio render</b>delivered</div>
       </div>
-      <div class="wcard-body">
-        <div class="wcard-kicker">LoRa · Wildlife Monitoring</div>
-        <h3>TrapX Declenchement Rev 2.0</h3>
-        <p>2-layer LoRa remote trap trigger. 12V field supply through buck plus LDO into an STM32 and an EBYTE sub-GHz module, with SMA antenna, SWD and UART debug headers. 60 nets, zero unrouted, production-ready.</p>
-        <div class="wcard-stats">
-          <div class="ws"><b>STM32 + LoRa</b>core</div>
-          <div class="ws"><b>60 nets</b>0 unrouted</div>
-        </div>
-        <div class="tags"><span class="tag">KiCad</span><span class="tag">STM32</span><span class="tag">EBYTE LoRa</span><span class="tag">SMA</span></div>
+      <div class="tags">
+        <span class="tag">3D CAD</span><span class="tag">KeyShot</span><span class="tag">Product Design</span><span class="tag">Brand Integration</span>
       </div>
     </div>
-
-    <div class="wcard">
-      <div class="wcard-img">
-        <img src="images/water-pump.jpg" alt="Electric water dispenser pump product render">
-        <span class="wcard-badge">3D CAD · KeyShot</span>
-      </div>
-      <div class="wcard-body">
-        <div class="wcard-kicker">Product Design · Consumer</div>
-        <h3>Electric Water Dispenser Pump</h3>
-        <p>Compact electric bottle dispenser pump. Matte dark cylindrical body, ergonomic side spout, and a one-touch green activation cap with branded logo. Rendered as a dark studio hero shot for e-commerce and packaging.</p>
-        <div class="wcard-stats">
-          <div class="ws"><b>One-touch</b>operation</div>
-          <div class="ws"><b>Studio render</b>delivered</div>
-        </div>
-        <div class="tags"><span class="tag">3D CAD</span><span class="tag">KeyShot</span><span class="tag">Product Design</span></div>
-      </div>
-    </div>
-
   </div>
 </section>
 
