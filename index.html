@@ -249,20 +249,75 @@ section{padding:88px 5vw;position:relative}
 }
 .sec-head p{color:var(--muted);font-size:1.02rem}
 
-/* ========== SERVICES ========== */
+/* ========== SERVICES — asymmetric editorial ========== */
 #services{background:var(--bg-2)}
-.svc-grid{
+.svc-layout{
   display:grid;
-  grid-template-columns:repeat(5,1fr);
-  gap:1px;background:var(--line);
-  border:1px solid var(--line);border-radius:12px;overflow:hidden;
+  grid-template-columns:1.15fr 1fr;
+  gap:28px;
+  align-items:stretch;
 }
-.svc{background:var(--panel);padding:36px 28px;transition:background .25s}
-.svc:hover{background:#0f2119}
-.svc-num{font-family:var(--mono);font-size:.72rem;color:var(--copper);margin-bottom:20px;letter-spacing:.1em}
-.svc-ic{width:34px;height:34px;margin-bottom:18px;stroke:var(--emerald);stroke-width:1.4;fill:none}
-.svc h3{font-family:var(--display);font-size:1.18rem;font-weight:600;margin-bottom:10px}
-.svc p{color:var(--muted);font-size:.92rem;line-height:1.6}
+
+/* Lead — the thing the studio is known for */
+.svc-lead{
+  position:relative;
+  background:
+    radial-gradient(120% 90% at 12% 0%,rgba(201,123,74,.10),transparent 55%),
+    var(--panel);
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:46px 44px;
+  display:flex;flex-direction:column;
+  overflow:hidden;
+  transition:border-color .3s;
+}
+.svc-lead:hover{border-color:var(--copper)}
+.svc-lead::before{
+  content:"";position:absolute;left:0;top:0;bottom:0;width:3px;
+  background:linear-gradient(to bottom,var(--copper),transparent);
+}
+.svc-lead .lead-eyebrow{
+  font-family:var(--mono);font-size:.7rem;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--copper);margin-bottom:auto;
+}
+.svc-lead .lead-ic{
+  width:46px;height:46px;stroke:var(--emerald);stroke-width:1.3;fill:none;
+  margin:38px 0 22px;
+}
+.svc-lead h3{
+  font-family:var(--display);font-size:1.85rem;font-weight:700;
+  letter-spacing:-.02em;line-height:1.1;margin-bottom:14px;
+}
+.svc-lead p{color:var(--muted);font-size:1rem;line-height:1.65;margin-bottom:26px;max-width:42ch}
+.lead-meta{display:flex;gap:10px;flex-wrap:wrap;margin-top:auto}
+.lead-meta span{
+  font-family:var(--mono);font-size:.72rem;
+  padding:6px 12px;border:1px solid var(--line);border-radius:5px;
+  color:var(--text);
+}
+
+/* Supporting — quieter, stacked list of four */
+.svc-support{
+  display:grid;
+  grid-template-rows:repeat(4,1fr);
+  gap:1px;background:var(--line);
+  border:1px solid var(--line);border-radius:14px;overflow:hidden;
+}
+.svc-item{
+  background:var(--panel);
+  padding:22px 26px;
+  display:grid;
+  grid-template-columns:auto 1fr;
+  gap:18px;align-items:start;
+  transition:background .25s;
+}
+.svc-item:hover{background:#0f2119}
+.svc-item .si-ic{
+  width:26px;height:26px;stroke:var(--emerald);stroke-width:1.4;fill:none;
+  margin-top:3px;
+}
+.svc-item h4{font-family:var(--display);font-size:1.04rem;font-weight:600;margin-bottom:5px}
+.svc-item p{color:var(--muted);font-size:.86rem;line-height:1.5}
 
 /* ========== PROCESS ========== */
 .phases{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden}
@@ -513,10 +568,8 @@ footer a:hover{color:var(--emerald)}
 .reveal.in{opacity:1;transform:none}
 
 /* ========== RESPONSIVE ========== */
-@media(max-width:1180px){
-  .svc-grid{grid-template-columns:repeat(3,1fr)}
-}
 @media(max-width:960px){
+  .svc-layout{grid-template-columns:1fr}
   .work-featured{grid-template-columns:1fr}
   .work-featured .feat-img{min-height:260px}
   .work-grid{grid-template-columns:1fr 1fr}
@@ -529,7 +582,6 @@ footer a:hover{color:var(--emerald)}
   .navlinks{display:none}
   .nav-hire{display:none}
   .burger{display:flex}
-  .svc-grid{grid-template-columns:1fr}
   nav.open .navlinks{
     display:flex;position:absolute;top:100%;left:0;right:0;
     flex-direction:column;background:rgba(5,9,8,.96);
@@ -616,37 +668,54 @@ footer a:hover{color:var(--emerald)}
     <h2>From circuit board to finished product.</h2>
     <p>Every service is built to hand off cleanly to the next stage. Verified designs, complete documentation, no surprises at the factory.</p>
   </div>
-  <div class="svc-grid reveal">
-    <div class="svc">
-      <div class="svc-num">01</div>
-      <svg class="svc-ic" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="1.5"/><path d="M7 21h10M9 18v3M15 18v3M7 9h4M7 13h7"/></svg>
+  <div class="svc-layout reveal">
+
+    <!-- Lead service -->
+    <div class="svc-lead">
+      <div class="lead-eyebrow">The core craft</div>
+      <svg class="lead-ic" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="1.5"/><path d="M7 21h10M9 18v3M15 18v3M7 9h4M7 13h7"/></svg>
       <h3>PCB Design &amp; Layout</h3>
-      <p>Multi-layer schematic capture and layout in KiCad, Altium, and Eagle, from 2-layer IoT boards to dense mixed-signal and RF designs.</p>
+      <p>It starts with the board. Multi-layer schematic capture and layout in KiCad, Altium, and Eagle, from 2-layer IoT boards to dense mixed-signal and RF designs. Clean copper, verified against the fab from the first net.</p>
+      <div class="lead-meta">
+        <span>2 &ndash; 8 layers</span>
+        <span>Mixed-signal</span>
+        <span>RF / high-speed</span>
+        <span>DRC verified</span>
+      </div>
     </div>
-    <div class="svc">
-      <div class="svc-num">02</div>
-      <svg class="svc-ic" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6v6H9z"/><path d="M9 2v2M15 2v2M9 20v2M15 20v2M2 9h2M2 15h2M20 9h2M20 15h2"/></svg>
-      <h3>Embedded Firmware</h3>
-      <p>Bring-up and firmware for ESP32, STM32, and nRF52 platforms: drivers, comms stacks, and hardware-software integration.</p>
+
+    <!-- Supporting services -->
+    <div class="svc-support">
+      <div class="svc-item">
+        <svg class="si-ic" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6v6H9z"/><path d="M9 2v2M15 2v2M9 20v2M15 20v2M2 9h2M2 15h2M20 9h2M20 15h2"/></svg>
+        <div>
+          <h4>Embedded Firmware</h4>
+          <p>Bring-up and firmware for ESP32, STM32, and nRF52: drivers, comms stacks, and hardware-software integration.</p>
+        </div>
+      </div>
+      <div class="svc-item">
+        <svg class="si-ic" viewBox="0 0 24 24"><path d="M12 3v18M3 12h18M5.6 5.6l12.8 12.8M18.4 5.6L5.6 18.4"/><circle cx="12" cy="12" r="3.5"/></svg>
+        <div>
+          <h4>Product &amp; Enclosure Design</h4>
+          <p>3D CAD enclosures and photorealistic KeyShot renders, from sheet-metal housings to consumer hero shots.</p>
+        </div>
+      </div>
+      <div class="svc-item">
+        <svg class="si-ic" viewBox="0 0 24 24"><path d="M12 2v6M12 16v6M2 12h6M16 12h6"/><circle cx="12" cy="12" r="4"/></svg>
+        <div>
+          <h4>Turnkey Manufacturing</h4>
+          <p>Managed fabrication and assembly via JLCPCB/PCBWay with LCSC sourcing. Gerbers, BOM, and CPL end to end.</p>
+        </div>
+      </div>
+      <div class="svc-item">
+        <svg class="si-ic" viewBox="0 0 24 24"><path d="M9 11l3 3 8-8"/><path d="M21 12v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h11"/></svg>
+        <div>
+          <h4>Design Audits &amp; DFM</h4>
+          <p>Independent review, DRC/ERC resolution, and design-for-manufacture checks to de-risk your board before a run.</p>
+        </div>
+      </div>
     </div>
-    <div class="svc">
-      <div class="svc-num">03</div>
-      <svg class="svc-ic" viewBox="0 0 24 24"><path d="M12 3v18M3 12h18M5.6 5.6l12.8 12.8M18.4 5.6L5.6 18.4"/><circle cx="12" cy="12" r="3.5"/></svg>
-      <h3>Product &amp; Enclosure Design</h3>
-      <p>3D CAD enclosure design and photorealistic KeyShot renders, from sheet-metal housings to consumer product hero shots for listings and decks.</p>
-    </div>
-    <div class="svc">
-      <div class="svc-num">04</div>
-      <svg class="svc-ic" viewBox="0 0 24 24"><path d="M12 2v6M12 16v6M2 12h6M16 12h6"/><circle cx="12" cy="12" r="4"/></svg>
-      <h3>Turnkey Manufacturing</h3>
-      <p>Managed fabrication and assembly via JLCPCB/PCBWay with LCSC sourcing. Gerbers, BOM, and CPL handled end to end.</p>
-    </div>
-    <div class="svc">
-      <div class="svc-num">05</div>
-      <svg class="svc-ic" viewBox="0 0 24 24"><path d="M9 11l3 3 8-8"/><path d="M21 12v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h11"/></svg>
-      <h3>Design Audits &amp; DFM</h3>
-      <p>Independent design review, DRC/ERC resolution, and design-for-manufacture checks to de-risk your board before you commit to a run.</p>
-    </div>
+
   </div>
 </section>
 
