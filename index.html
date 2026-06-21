@@ -111,7 +111,7 @@ nav.scrolled{
 .hero-photo img{
   width:100%;height:100%;
   object-fit:cover;
-  object-position:72% center;
+  object-position:center center;
   display:block;
 }
 /* placeholder grid when no photo */
@@ -136,15 +136,14 @@ nav.scrolled{
   color:var(--faint);letter-spacing:.06em;
 }
 
-/* gradient overlay — darkens left (for copy) and bottom (for ticker), photo bg already dark */
+/* gradient overlay — softened left so the board stays visible */
 .hero-overlay{
   position:absolute;inset:0;z-index:3;
   background:
     linear-gradient(to right,
-      rgba(5,9,8,.92) 0%,
-      rgba(5,9,8,.55) 30%,
-      rgba(5,9,8,.05) 55%,
-      rgba(5,9,8,0) 75%),
+      rgba(5,9,8,.85) 0%,
+      rgba(5,9,8,.4) 35%,
+      rgba(5,9,8,0) 65%),
     linear-gradient(to bottom,
       rgba(5,9,8,.4) 0%,
       rgba(5,9,8,0) 25%,
@@ -558,7 +557,7 @@ footer a:hover{color:var(--emerald)}
     <a href="#work">Work</a>
     <a href="#about">About</a>
   </div>
-  <a href="https://www.fiverr.com/YOUR_USERNAME" target="_blank" rel="noopener" class="nav-hire">Hire on Fiverr →</a>
+  <a href="https://www.fiverr.com/YOUR_USERNAME" target="_blank" rel="noopener" class="nav-hire">Hire on Fiverr &rarr;</a>
   <button class="burger" id="burger"><span></span><span></span><span></span></button>
 </nav>
 
@@ -568,10 +567,9 @@ footer a:hover{color:var(--emerald)}
   <!-- massive background word -->
   <div class="hero-word">HARDWARE</div>
 
-  <!-- photo layer — replace placeholder with your board or portrait -->
+  <!-- photo layer -->
   <div class="hero-photo">
-    <img src="images/edwin-hero.jpg" alt="Edwin Ongoro Juma, Founder of Isal Electronics">
-
+    <img src="images/hero-board.jpg" alt="Dual USB-A PCB with STM32 and onboard power supply">
   </div>
 
   <div class="hero-overlay"></div>
@@ -579,11 +577,11 @@ footer a:hover{color:var(--emerald)}
 
   <!-- left-anchored copy -->
   <div class="hero-copy">
-    <div class="tagline">PCB Design · Embedded Systems · Nairobi</div>
+    <div class="tagline">PCB Design &middot; Embedded Systems &middot; Nairobi</div>
     <h1>From schematic to <span>manufacturing-ready</span> hardware.</h1>
     <p class="sub">PCB design, embedded firmware, and product enclosures for startups and OEMs. International standards, East African accountability.</p>
     <div class="hero-cta">
-      <a href="https://www.fiverr.com/YOUR_USERNAME" target="_blank" rel="noopener" class="btn btn-primary">Hire on Fiverr →</a>
+      <a href="https://www.fiverr.com/YOUR_USERNAME" target="_blank" rel="noopener" class="btn btn-primary">Hire on Fiverr &rarr;</a>
       <a href="#work" class="btn btn-ghost">See the work</a>
     </div>
   </div>
@@ -591,23 +589,22 @@ footer a:hover{color:var(--emerald)}
   <!-- scrolling ticker -->
   <div class="hero-ticker">
     <div class="ticker-track">
-      <span>KiCad</span><span class="dot">·</span>
-      <span>Altium Designer</span><span class="dot">·</span>
-      <span>JLCPCB fab-ready</span><span class="dot">·</span>
-      <span>ESP32 · STM32 · nRF52</span><span class="dot">·</span>
-      <span>DFM / DFT review</span><span class="dot">·</span>
-      <span>LTspice simulation</span><span class="dot">·</span>
-      <span>IPC-A-610 workmanship</span><span class="dot">·</span>
-      <span>LCSC sourcing</span><span class="dot">·</span>
-      <!-- duplicate for seamless loop -->
-      <span>KiCad</span><span class="dot">·</span>
-      <span>Altium Designer</span><span class="dot">·</span>
-      <span>JLCPCB fab-ready</span><span class="dot">·</span>
-      <span>ESP32 · STM32 · nRF52</span><span class="dot">·</span>
-      <span>DFM / DFT review</span><span class="dot">·</span>
-      <span>LTspice simulation</span><span class="dot">·</span>
-      <span>IPC-A-610 workmanship</span><span class="dot">·</span>
-      <span>LCSC sourcing</span><span class="dot">·</span>
+      <span>KiCad</span><span class="dot">&middot;</span>
+      <span>Altium Designer</span><span class="dot">&middot;</span>
+      <span>JLCPCB fab-ready</span><span class="dot">&middot;</span>
+      <span>ESP32 &middot; STM32 &middot; nRF52</span><span class="dot">&middot;</span>
+      <span>DFM / DFT review</span><span class="dot">&middot;</span>
+      <span>LTspice simulation</span><span class="dot">&middot;</span>
+      <span>IPC-A-610 workmanship</span><span class="dot">&middot;</span>
+      <span>LCSC sourcing</span><span class="dot">&middot;</span>
+      <span>KiCad</span><span class="dot">&middot;</span>
+      <span>Altium Designer</span><span class="dot">&middot;</span>
+      <span>JLCPCB fab-ready</span><span class="dot">&middot;</span>
+      <span>ESP32 &middot; STM32 &middot; nRF52</span><span class="dot">&middot;</span>
+      <span>DFM / DFT review</span><span class="dot">&middot;</span>
+      <span>LTspice simulation</span><span class="dot">&middot;</span>
+      <span>IPC-A-610 workmanship</span><span class="dot">&middot;</span>
+      <span>LCSC sourcing</span><span class="dot">&middot;</span>
     </div>
   </div>
 </header>
@@ -623,7 +620,7 @@ footer a:hover{color:var(--emerald)}
     <div class="svc">
       <div class="svc-num">01</div>
       <svg class="svc-ic" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="1.5"/><path d="M7 21h10M9 18v3M15 18v3M7 9h4M7 13h7"/></svg>
-      <h3>PCB Design & Layout</h3>
+      <h3>PCB Design &amp; Layout</h3>
       <p>Multi-layer schematic capture and layout in KiCad, Altium, and Eagle, from 2-layer IoT boards to dense mixed-signal and RF designs.</p>
     </div>
     <div class="svc">
@@ -635,7 +632,7 @@ footer a:hover{color:var(--emerald)}
     <div class="svc">
       <div class="svc-num">03</div>
       <svg class="svc-ic" viewBox="0 0 24 24"><path d="M12 3v18M3 12h18M5.6 5.6l12.8 12.8M18.4 5.6L5.6 18.4"/><circle cx="12" cy="12" r="3.5"/></svg>
-      <h3>Product & Enclosure Design</h3>
+      <h3>Product &amp; Enclosure Design</h3>
       <p>3D CAD enclosure design and photorealistic KeyShot renders, from sheet-metal housings to consumer product hero shots for listings and decks.</p>
     </div>
     <div class="svc">
@@ -647,7 +644,7 @@ footer a:hover{color:var(--emerald)}
     <div class="svc">
       <div class="svc-num">05</div>
       <svg class="svc-ic" viewBox="0 0 24 24"><path d="M9 11l3 3 8-8"/><path d="M21 12v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h11"/></svg>
-      <h3>Design Audits & DFM</h3>
+      <h3>Design Audits &amp; DFM</h3>
       <p>Independent design review, DRC/ERC resolution, and design-for-manufacture checks to de-risk your board before you commit to a run.</p>
     </div>
   </div>
@@ -681,21 +678,6 @@ footer a:hover{color:var(--emerald)}
 </section>
 
 <!-- WORK -->
-<!--
-  IMAGE SWAP GUIDE
-  ================
-  Featured card (.work-featured):
-    Replace the <div class="feat-img-placeholder">...</div> inside .feat-img with:
-    <img src="images/thermowatch-board.jpg" alt="ThermoWatch Pro v2.1">
-    Recommended size: 1200×800 px
-
-  Grid cards (.wcard):
-    Replace each <div class="wcard-img-placeholder">...</div> inside .wcard-img with:
-    <img src="images/YOUR-IMAGE.jpg" alt="PROJECT NAME">
-    Recommended size: 800×450 px (16:9), dark dramatic lighting.
-
-  KiCad 3D export: File > Export > Current View as PNG, then crop to 16:9.
--->
 <section id="work">
   <div class="sec-head reveal">
     <span class="sec-tag">Selected work</span>
@@ -707,10 +689,10 @@ footer a:hover{color:var(--emerald)}
   <div class="work-featured reveal">
     <div class="feat-img">
       <img src="images/trapx-board.jpg" alt="TrapX Declenchement LoRa trap trigger board Rev 2.0">
-      <span class="feat-badge">2-layer · KiCad</span>
+      <span class="feat-badge">2-layer &middot; KiCad</span>
     </div>
     <div class="feat-body">
-      <div class="feat-kicker">LoRa · Wildlife Monitoring</div>
+      <div class="feat-kicker">LoRa &middot; Wildlife Monitoring</div>
       <h3>TrapX Declenchement Rev 2.0</h3>
       <p>2-layer LoRa remote trap trigger for a wildlife monitoring system. A 12V field supply steps down through a buck converter to 5V then an LDO to 3.3V, powering an STM32 microcontroller and an EBYTE sub-GHz LoRa module for long-range wireless triggering. SMA antenna, dedicated output terminal, plus SWD and UART headers for field debugging without disassembly.</p>
       <div class="feat-stats">
@@ -728,10 +710,10 @@ footer a:hover{color:var(--emerald)}
   <div class="work-featured reverse reveal">
     <div class="feat-img">
       <img src="images/water-pump.jpg" alt="Electric water dispenser pump product render">
-      <span class="feat-badge">3D CAD · KeyShot</span>
+      <span class="feat-badge">3D CAD &middot; KeyShot</span>
     </div>
     <div class="feat-body">
-      <div class="feat-kicker">Product Design · Consumer</div>
+      <div class="feat-kicker">Product Design &middot; Consumer</div>
       <h3>Electric Water Dispenser Pump</h3>
       <p>Compact electric bottle dispenser pump. Matte dark cylindrical body, an ergonomic side-extending spout, and a large one-touch activation cap with a bright green face and branded logo. Rendered as a dark studio hero shot suitable for e-commerce listings, packaging, and brand presentations.</p>
       <div class="feat-stats">
@@ -747,15 +729,6 @@ footer a:hover{color:var(--emerald)}
 </section>
 
 <!-- ABOUT -->
-<!--
-  PHOTO SWAP
-  ==========
-  Replace the <div class="about-photo-placeholder">...</div> inside .about-photo with:
-  <img src="images/edwin-photo.jpg" alt="Edwin Ongoro Juma">
-  Recommended: 900×1100 px portrait, head-and-shoulders,
-  natural side lighting against a neutral/dark background.
-  The right-edge gradient overlay blends it into the info panel.
--->
 <section id="about" style="background:var(--bg-2)">
   <div class="sec-head reveal" style="max-width:100%">
     <span class="sec-tag">The engineer behind it</span>
@@ -764,10 +737,9 @@ footer a:hover{color:var(--emerald)}
     <!-- Photo -->
     <div class="about-photo">
       <img src="images/edwin-portrait.jpg" alt="Edwin Ongoro Juma">
-
       <div class="about-photo-overlay"></div>
       <div class="about-photo-name">
-        <small>Founder & Lead Engineer</small>
+        <small>Founder &amp; Lead Engineer</small>
         Edwin Ongoro Juma
       </div>
     </div>
@@ -775,11 +747,11 @@ footer a:hover{color:var(--emerald)}
     <div class="about-info">
       <h2>Hardware and software, by one hand.</h2>
       <p>Isal Electronics is founded by Edwin Ongoro Juma, an electrical and electronics engineer who designs the board and writes the firmware that runs on it. That full-stack view, from copper to code, is what keeps designs clean and bring-up fast.</p>
-      <p>Trained in Electrical & Electronics Engineering at Dedan Kimathi University of Technology and in software engineering through ALX Africa.</p>
+      <p>Trained in Electrical &amp; Electronics Engineering at Dedan Kimathi University of Technology and in software engineering through ALX Africa.</p>
       <div class="about-creds">
-        <div><span class="arr">▹</span>BSc Electrical & Electronics Engineering, Dedan Kimathi University of Technology</div>
-        <div><span class="arr">▹</span>Software Engineering, ALX Africa</div>
-        <div><span class="arr">▹</span>Focus: PCB design, embedded systems, applied ML</div>
+        <div><span class="arr">&#9657;</span>BSc Electrical &amp; Electronics Engineering, Dedan Kimathi University of Technology</div>
+        <div><span class="arr">&#9657;</span>Software Engineering, ALX Africa</div>
+        <div><span class="arr">&#9657;</span>Focus: PCB design, embedded systems, applied ML</div>
       </div>
       <div class="founder-stats">
         <div class="s"><b>26+</b><span>Boards shipped</span></div>
@@ -792,9 +764,9 @@ footer a:hover{color:var(--emerald)}
         <span class="chip">C / Python</span>
       </div>
       <div class="founder-links">
-        <a href="https://www.fiverr.com/YOUR_USERNAME" target="_blank" rel="noopener">Fiverr ↗</a>
-        <a href="https://github.com/Codejuma" target="_blank" rel="noopener">GitHub ↗</a>
-        <a href="https://www.linkedin.com/in/ongoro-juma-963325a9" target="_blank" rel="noopener">LinkedIn ↗</a>
+        <a href="https://www.fiverr.com/YOUR_USERNAME" target="_blank" rel="noopener">Fiverr &#8599;</a>
+        <a href="https://github.com/Codejuma" target="_blank" rel="noopener">GitHub &#8599;</a>
+        <a href="https://www.linkedin.com/in/ongoro-juma-963325a9" target="_blank" rel="noopener">LinkedIn &#8599;</a>
       </div>
     </div>
   </div>
@@ -807,9 +779,9 @@ footer a:hover{color:var(--emerald)}
     <h2>Have an idea that needs <span>building?</span></h2>
     <p>From a single prototype to a production run, Isal Electronics takes it from schematic to something you can hold.</p>
     <div class="cta-row">
-      <a href="https://www.fiverr.com/YOUR_USERNAME" target="_blank" rel="noopener" class="btn btn-primary">Hire on Fiverr →</a>
+      <a href="https://www.fiverr.com/YOUR_USERNAME" target="_blank" rel="noopener" class="btn btn-primary">Hire on Fiverr &rarr;</a>
       <a href="mailto:hello@tracewright.co.ke" class="btn btn-ghost">Get in touch</a>
-      <a href="https://github.com/Codejuma" target="_blank" rel="noopener" class="btn btn-ghost">View GitHub →</a>
+      <a href="https://github.com/Codejuma" target="_blank" rel="noopener" class="btn btn-ghost">View GitHub &rarr;</a>
     </div>
   </div>
 </section>
@@ -817,8 +789,8 @@ footer a:hover{color:var(--emerald)}
 <!-- FOOTER -->
 <footer>
   <a href="#top" class="fbrand">Isal Electronics</a>
-  <span>PCB design, embedded systems & product design · Nairobi, Kenya</span>
-  <span>© <span id="yr"></span> Isal Electronics. All rights reserved.</span>
+  <span>PCB design, embedded systems &amp; product design &middot; Nairobi, Kenya</span>
+  <span>&copy; <span id="yr"></span> Isal Electronics. All rights reserved.</span>
 </footer>
 
 <script>
