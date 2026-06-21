@@ -319,25 +319,71 @@ section{padding:88px 5vw;position:relative}
 .svc-item h4{font-family:var(--display);font-size:1.04rem;font-weight:600;margin-bottom:5px}
 .svc-item p{color:var(--muted);font-size:.86rem;line-height:1.5}
 
-/* ========== PROCESS ========== */
-.phases{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden}
-.phase{
-  display:grid;grid-template-columns:160px 1fr;
-  align-items:start;padding:32px 28px;
+/* ========== PROCESS — stepped ascent ========== */
+.ascent{
+  position:relative;
+  margin-top:40px;
+}
+/* progress spine — runs along the climbing baseline */
+.ascent-track{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:22px;
+  align-items:end;
+}
+.step{
+  position:relative;
   background:var(--panel);
-  transition:background .25s;
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:26px 24px 28px;
+  transition:transform .3s,border-color .3s;
+  min-height:230px;
+  display:flex;flex-direction:column;
 }
-.phase:hover{background:#0f2119}
-.ph-label{font-family:var(--mono);font-size:.72rem;color:var(--emerald);letter-spacing:.08em}
-.ph-num{font-family:var(--display);font-size:3rem;font-weight:700;color:var(--faint);line-height:1;margin-top:4px}
-.phase h3{font-family:var(--display);font-size:1.18rem;font-weight:600;margin-bottom:8px}
-.phase p{color:var(--muted);font-size:.92rem;line-height:1.6}
-.phase-badge{
-  display:inline-block;margin-top:10px;
-  font-family:var(--mono);font-size:.65rem;letter-spacing:.08em;
-  color:var(--faint);border:1px solid var(--line);
-  padding:3px 9px;border-radius:4px;
+/* each card climbs higher than the previous */
+.step:nth-child(1){margin-top:96px}
+.step:nth-child(2){margin-top:64px}
+.step:nth-child(3){margin-top:32px}
+.step:nth-child(4){margin-top:0}
+.step:hover{transform:translateY(-6px)}
+
+/* connector riser between consecutive cards */
+.step::after{
+  content:"";
+  position:absolute;
+  top:-32px;right:-22px;
+  width:22px;height:32px;
+  border-left:1px dashed var(--line);
+  border-top:1px dashed var(--line);
+  border-top-left-radius:8px;
+  pointer-events:none;
 }
+.step:nth-child(4)::after{display:none}
+
+/* status accent */
+.step.active{border-color:var(--emerald-dim)}
+.step.active::before{
+  content:"";position:absolute;left:0;top:18px;bottom:18px;width:3px;
+  background:var(--emerald);border-radius:3px;
+}
+.step.upcoming{opacity:.78}
+
+.step-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:auto}
+.step-ph{font-family:var(--mono);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+.step-num{font-family:var(--display);font-size:2.6rem;font-weight:700;line-height:1;color:var(--faint)}
+.step.active .step-num{color:var(--emerald)}
+.step h3{font-family:var(--display);font-size:1.12rem;font-weight:600;margin:18px 0 8px}
+.step p{color:var(--muted);font-size:.86rem;line-height:1.55}
+.step-status{
+  display:inline-flex;align-items:center;gap:7px;margin-top:14px;
+  font-family:var(--mono);font-size:.64rem;letter-spacing:.08em;text-transform:uppercase;
+}
+.step-status .dot{width:7px;height:7px;border-radius:50%;flex:none}
+.step.active .step-status{color:var(--emerald)}
+.step.active .step-status .dot{background:var(--emerald);box-shadow:0 0 0 3px rgba(47,191,113,.18)}
+.step.upcoming .step-status{color:var(--faint)}
+.step.upcoming .step-status .dot{background:var(--faint)}
 
 /* ========== WORK — image-first ========== */
 #work{background:var(--bg-2)}
@@ -604,6 +650,9 @@ footer a:hover{color:var(--emerald)}
 /* ========== RESPONSIVE ========== */
 @media(max-width:960px){
   .svc-layout{grid-template-columns:1fr}
+  .ascent-track{grid-template-columns:1fr 1fr;gap:22px 22px}
+  .step:nth-child(1),.step:nth-child(2),.step:nth-child(3),.step:nth-child(4){margin-top:0}
+  .step::after{display:none}
   .work-featured{grid-template-columns:1fr}
   .work-featured .feat-img{min-height:260px}
   .work-grid{grid-template-columns:1fr 1fr}
@@ -628,7 +677,7 @@ footer a:hover{color:var(--emerald)}
   .hero-copy .right{align-items:flex-start}
   .hero-copy .sub{text-align:left}
   .hero-cta{justify-content:flex-start}
-  .phase{grid-template-columns:1fr;gap:8px}
+  .ascent-track{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -761,22 +810,49 @@ footer a:hover{color:var(--emerald)}
     <h2>A studio built in phases.</h2>
     <p>Isal Electronics grows from a design house into a full local manufacturing partner.</p>
   </div>
-  <div class="phases reveal">
-    <div class="phase">
-      <div><div class="ph-label">Phase</div><div class="ph-num">01</div></div>
-      <div><h3>Design House</h3><p>Schematic, layout, and fabrication packages delivered to your factory of choice. Fastest path from idea to a board you can build anywhere.</p></div>
-    </div>
-    <div class="phase">
-      <div><div class="ph-label">Phase</div><div class="ph-num">02</div></div>
-      <div><h3>Turnkey Delivery</h3><p>We manage fabrication, component sourcing, and assembly so you receive working hardware, not a pile of files and a factory to chase.</p></div>
-    </div>
-    <div class="phase">
-      <div><div class="ph-label">Phase</div><div class="ph-num">03</div></div>
-      <div><h3>In-House Assembly</h3><p>Low-volume SMT and through-hole assembly in Nairobi for fast prototypes and small production runs, built to IPC-A-610 workmanship standards.</p><span class="phase-badge">coming soon</span></div>
-    </div>
-    <div class="phase">
-      <div><div class="ph-label">Phase</div><div class="ph-num">04</div></div>
-      <div><h3>Local Fabrication</h3><p>Bringing bare-board capability closer to East African hardware teams as demand scales.</p><span class="phase-badge">planned</span></div>
+  <div class="ascent reveal">
+    <div class="ascent-track">
+
+      <div class="step active">
+        <div class="step-top">
+          <span class="step-ph">Phase</span>
+          <span class="step-num">01</span>
+        </div>
+        <h3>Design House</h3>
+        <p>Schematic, layout, and fabrication packages delivered to your factory of choice. The fastest path from idea to a board you can build anywhere.</p>
+        <span class="step-status"><span class="dot"></span>Live now</span>
+      </div>
+
+      <div class="step active">
+        <div class="step-top">
+          <span class="step-ph">Phase</span>
+          <span class="step-num">02</span>
+        </div>
+        <h3>Turnkey Delivery</h3>
+        <p>We manage fabrication, sourcing, and assembly so you receive working hardware, not a pile of files and a factory to chase.</p>
+        <span class="step-status"><span class="dot"></span>Live now</span>
+      </div>
+
+      <div class="step upcoming">
+        <div class="step-top">
+          <span class="step-ph">Phase</span>
+          <span class="step-num">03</span>
+        </div>
+        <h3>In-House Assembly</h3>
+        <p>Low-volume SMT and through-hole assembly in Nairobi for fast prototypes and small runs, built to IPC-A-610 standards.</p>
+        <span class="step-status"><span class="dot"></span>Coming soon</span>
+      </div>
+
+      <div class="step upcoming">
+        <div class="step-top">
+          <span class="step-ph">Phase</span>
+          <span class="step-num">04</span>
+        </div>
+        <h3>Local Fabrication</h3>
+        <p>Bringing bare-board capability closer to East African hardware teams as demand scales.</p>
+        <span class="step-status"><span class="dot"></span>Planned</span>
+      </div>
+
     </div>
   </div>
 </section>
