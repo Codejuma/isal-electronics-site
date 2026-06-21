@@ -673,10 +673,39 @@ footer a:hover{color:var(--emerald)}
   }
   nav.open .nav-hire{display:block;margin:0 5vw 16px}
   .work-grid{grid-template-columns:1fr}
-  .hero-copy{flex-direction:column;align-items:flex-start;bottom:80px}
-  .hero-copy .right{align-items:flex-start}
-  .hero-copy .sub{text-align:left}
+
+  /* HERO — mobile legibility rework */
+  .hero{min-height:580px}
+  .hero-photo img{
+    object-position:72% 30%;
+  }
+  /* vertical scrim: strong at bottom where the copy sits, light at top */
+  .hero-overlay{
+    background:
+      linear-gradient(to bottom,
+        rgba(5,9,8,.55) 0%,
+        rgba(5,9,8,.35) 30%,
+        rgba(5,9,8,.75) 62%,
+        rgba(5,9,8,.97) 100%);
+  }
+  .hero-word{font-size:clamp(70px,26vw,120px);opacity:.07;top:22%}
+  /* anchor copy to the bottom, full readable width */
+  .hero-copy{
+    top:auto;bottom:96px;left:0;right:0;
+    transform:none;
+    padding:0 6vw;
+    max-width:none;
+  }
+  .hero-copy .tagline{margin-bottom:14px}
+  .hero-copy h1{font-size:clamp(1.9rem,8vw,2.6rem);margin-bottom:16px}
+  .hero-copy .sub{
+    color:var(--text);
+    max-width:none;
+    font-size:1rem;
+    margin-bottom:24px;
+  }
   .hero-cta{justify-content:flex-start}
+  .hero-cta .btn{flex:1;justify-content:center;text-align:center}
   .ascent-track{grid-template-columns:1fr}
 }
 </style>
@@ -916,17 +945,17 @@ footer a:hover{color:var(--emerald)}
   <div class="about-wrap reveal">
     <!-- Photo -->
     <div class="about-photo">
-      <img src="images/edwin-portrait.jpg" alt="Edwin Ongoro Juma">
+      <img src="images/ongoro-portrait.jpg" alt="Ongoro Juma">
       <div class="about-photo-overlay"></div>
       <div class="about-photo-name">
         <small>Founder &amp; Lead Engineer</small>
-        Edwin Ongoro Juma
+        Ongoro Juma
       </div>
     </div>
     <!-- Info -->
     <div class="about-info">
       <h2>Hardware and software, by one hand.</h2>
-      <p>Isal Electronics is founded by Edwin Ongoro Juma, an electrical and electronics engineer who designs the board and writes the firmware that runs on it. That full-stack view, from copper to code, is what keeps designs clean and bring-up fast.</p>
+      <p>Isal Electronics is founded by Ongoro Juma, an electrical and electronics engineer who designs the board and writes the firmware that runs on it. That full-stack view, from copper to code, is what keeps designs clean and bring-up fast.</p>
       <p>Trained in Electrical &amp; Electronics Engineering at Dedan Kimathi University of Technology and in software engineering through ALX Africa.</p>
       <div class="about-creds">
         <div><span class="arr">&#9657;</span>BSc Electrical &amp; Electronics Engineering, Dedan Kimathi University of Technology</div>
