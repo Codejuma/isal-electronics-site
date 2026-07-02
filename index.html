@@ -76,6 +76,7 @@
   --display:'Space Grotesk',sans-serif;
   --mono:'JetBrains Mono',monospace;
   --body:'Inter',sans-serif;
+  color-scheme:dark;
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth;scroll-padding-top:80px}
@@ -362,6 +363,44 @@ section{padding:88px 5vw;position:relative}
 }
 .svc-item h4{font-family:var(--display);font-size:1.04rem;font-weight:600;margin-bottom:5px}
 .svc-item p{color:var(--muted);font-size:.86rem;line-height:1.5}
+
+/* ========== CAPABILITIES — datasheet ========== */
+.cap-table{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--panel)}
+.cap-row{display:grid;grid-template-columns:240px 1fr;border-bottom:1px solid var(--line)}
+.cap-row:last-child{border-bottom:0}
+.cap-key{
+  font-family:var(--mono);font-size:.7rem;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--copper);
+  padding:18px 24px;border-right:1px solid var(--line);
+  display:flex;align-items:center;
+}
+.cap-val{padding:16px 24px;font-size:.9rem;color:var(--text);line-height:1.7}
+.cap-val .dim{color:var(--muted)}
+.cap-sub{
+  font-family:var(--mono);font-size:.72rem;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--copper);
+  margin:44px 0 16px;font-weight:500;
+}
+.aftercare{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:1px;background:var(--line);
+  border:1px solid var(--line);border-radius:12px;overflow:hidden;
+}
+.after-item{background:var(--panel);padding:24px 26px}
+.after-item h4{
+  font-family:var(--display);font-size:1.02rem;font-weight:600;
+  margin-bottom:7px;display:flex;align-items:center;gap:9px;
+}
+.after-item h4 .arr{color:var(--emerald)}
+.after-item p{color:var(--muted);font-size:.87rem;line-height:1.55}
+@media(max-width:960px){
+  .aftercare{grid-template-columns:1fr}
+}
+@media(max-width:680px){
+  .cap-row{grid-template-columns:1fr}
+  .cap-key{border-right:0;padding:14px 20px 2px}
+  .cap-val{padding:6px 20px 16px}
+}
 
 /* ========== PROCESS — stepped ascent ========== */
 .ascent{
@@ -661,19 +700,23 @@ section{padding:88px 5vw;position:relative}
   font-family:var(--mono);font-size:.7rem;letter-spacing:.08em;
   text-transform:uppercase;color:var(--faint);
 }
-.ask-field input,.ask-field textarea{
+.ask-field input,.ask-field textarea,.ask-field select{
   font-family:var(--body);font-size:.95rem;
   background:var(--panel);color:var(--text);
   border:1px solid var(--line);border-radius:7px;
   padding:13px 15px;transition:border-color .2s;
   width:100%;
 }
-.ask-field input:focus,.ask-field textarea:focus{
+.ask-field input:focus,.ask-field textarea:focus,.ask-field select:focus{
   outline:none;border-color:var(--emerald-dim);
 }
+.ask-field select{cursor:pointer}
 .ask-field textarea{resize:vertical;min-height:130px}
 .ask-actions{display:flex;align-items:center;gap:16px;margin-top:6px;flex-wrap:wrap}
 .ask-note{font-family:var(--mono);font-size:.72rem;color:var(--faint)}
+.ask-status{display:none;font-family:var(--mono);font-size:.78rem;margin-top:4px;text-align:left}
+.ask-status.ok{display:block;color:var(--emerald)}
+.ask-status.warn{display:block;color:var(--copper)}
 @media(max-width:560px){.ask-row{grid-template-columns:1fr}}
 
 /* ========== FOOTER ========== */
@@ -793,12 +836,13 @@ footer a:hover{color:var(--emerald)}
   </a>
   <div class="navlinks">
     <a href="#services">Services</a>
+    <a href="#capabilities">Specs</a>
     <a href="#process">Process</a>
     <a href="#work">Work</a>
     <a href="#about">About</a>
-    <a href="#ask">Ask</a>
+    <a href="#ask">Quote</a>
   </div>
-  <a href="mailto:isalelectronics9@gmail.com?subject=PCB%20Order%20Enquiry" class="nav-hire">Order your PCB &rarr;</a>
+  <a href="#ask" class="nav-hire">Order your PCB &rarr;</a>
   <button class="burger" id="burger"><span></span><span></span><span></span></button>
 </nav>
 
@@ -822,7 +866,7 @@ footer a:hover{color:var(--emerald)}
     <h1>From schematic to <span>manufacturing-ready</span> hardware.</h1>
     <p class="sub">PCB design, embedded firmware, and product enclosures for startups and OEMs. International standards, East African accountability.</p>
     <div class="hero-cta">
-      <a href="mailto:isalelectronics9@gmail.com?subject=PCB%20Order%20Enquiry" class="btn btn-primary">Order your PCB &rarr;</a>
+      <a href="#ask" class="btn btn-primary">Order your PCB &rarr;</a>
       <a href="#work" class="btn btn-ghost">See the work</a>
     </div>
   </div>
@@ -905,6 +949,64 @@ footer a:hover{color:var(--emerald)}
       </div>
     </div>
 
+  </div>
+</section>
+
+<!-- CAPABILITIES -->
+<section id="capabilities">
+  <div class="sec-head reveal">
+    <span class="sec-tag">Datasheet</span>
+    <h2>Capabilities at a glance.</h2>
+    <p>The numbers a hardware team checks before handing over a board. If a requirement sits outside these, ask anyway. Edge cases get an honest answer, not a stretched one.</p>
+  </div>
+  <div class="cap-table reveal">
+    <div class="cap-row">
+      <div class="cap-key">PCB complexity</div>
+      <div class="cap-val">2 &ndash; 8 layers &middot; mixed-signal &middot; RF / high-speed &middot; fine-pitch QFN &amp; BGA down to 0.4 mm</div>
+    </div>
+    <div class="cap-row">
+      <div class="cap-key">Design rules</div>
+      <div class="cap-val">Track / gap to 3.5 / 3.5 mil &middot; 0.2 mm drills &middot; via-in-pad &middot; castellated edges &middot; controlled impedance</div>
+    </div>
+    <div class="cap-row">
+      <div class="cap-key">Stackup &amp; fab</div>
+      <div class="cap-val">JLCPCB &amp; PCBWay verified stackups &middot; JLC04161H-7628 impedance profiles &middot; LCSC-first part selection for one-stop assembly</div>
+    </div>
+    <div class="cap-row">
+      <div class="cap-key">EDA toolchain</div>
+      <div class="cap-val">KiCad &middot; Altium Designer &middot; Eagle &middot; EasyEDA <span class="dim">&middot; native source files delivered, not exports</span></div>
+    </div>
+    <div class="cap-row">
+      <div class="cap-key">Embedded platforms</div>
+      <div class="cap-val">ESP32 &middot; STM32 &middot; nRF52 <span class="dim">&middot; bring-up firmware, drivers &amp; comms stacks</span></div>
+    </div>
+    <div class="cap-row">
+      <div class="cap-key">Verification</div>
+      <div class="cap-val">ERC / DRC closed to zero errors &middot; LTspice &amp; MATLAB simulation &middot; independent DFM / DFT review before release</div>
+    </div>
+    <div class="cap-row">
+      <div class="cap-key">Deliverables</div>
+      <div class="cap-val">Gerber X2 + NC drill &middot; BOM with LCSC part numbers &middot; CPL / pick-and-place &middot; 3D STEP &middot; assembly drawings &middot; schematic PDF</div>
+    </div>
+    <div class="cap-row">
+      <div class="cap-key">Standards</div>
+      <div class="cap-val">IPC-2221 clearances &middot; IPC-7351 land patterns &middot; IPC-A-610 workmanship criteria &middot; RoHS-compliant BOMs</div>
+    </div>
+  </div>
+  <h3 class="cap-sub reveal">After delivery</h3>
+  <div class="aftercare reveal">
+    <div class="after-item">
+      <h4><span class="arr">&#9657;</span>You own the source</h4>
+      <p>Native KiCad or Altium project files transfer with the final payment, alongside every fab output. No lock-in; any engineer can pick the design up.</p>
+    </div>
+    <div class="after-item">
+      <h4><span class="arr">&#9657;</span>30-day fix window</h4>
+      <p>Any ERC, DRC or fab-blocking error found within 30 days of handoff is corrected free of charge. No debate, no invoice.</p>
+    </div>
+    <div class="after-item">
+      <h4><span class="arr">&#9657;</span>Supported respins</h4>
+      <p>Future revisions are quoted against the existing project files, so a v1.1 costs a fraction of the original design, not a restart.</p>
+    </div>
   </div>
 </section>
 
@@ -1072,32 +1174,78 @@ footer a:hover{color:var(--emerald)}
   </div>
 </section>
 
-<!-- ASK A QUESTION -->
+<!-- QUOTE / ASK -->
 <section id="ask">
   <div class="ask-wrap reveal">
-    <span class="sec-tag" style="display:block;margin-bottom:14px">Before you commit</span>
-    <h2>Have a <span>question?</span></h2>
-    <p>Unsure which layer count you need, what a quote looks like, or whether your idea is buildable? Send it over and you'll get a straight answer.</p>
-    <div class="ask-form">
+    <span class="sec-tag" style="display:block;margin-bottom:14px">Scope it</span>
+    <h2>Get a <span>quote.</span></h2>
+    <p>Five fields, one business day, a fixed price with no obligation. Only have a question? Pick "Just a question" and ask away.</p>
+    <form class="ask-form" id="quote-form" name="quote" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+      <input type="hidden" name="form-name" value="quote">
+      <p style="display:none"><label>Leave this empty: <input name="bot-field"></label></p>
       <div class="ask-row">
         <div class="ask-field">
-          <label for="ask-name">Your name</label>
-          <input type="text" id="ask-name" placeholder="Jane Doe">
+          <label for="q-name">Your name</label>
+          <input type="text" id="q-name" name="name" placeholder="Jane Doe">
         </div>
         <div class="ask-field">
-          <label for="ask-email">Your email</label>
-          <input type="email" id="ask-email" placeholder="jane@company.com">
+          <label for="q-email">Your email</label>
+          <input type="email" id="q-email" name="email" placeholder="jane@company.com" required>
+        </div>
+      </div>
+      <div class="ask-row">
+        <div class="ask-field">
+          <label for="q-type">Project type</label>
+          <select id="q-type" name="project-type">
+            <option>New design (schematic + layout)</option>
+            <option>Layout only (schematic provided)</option>
+            <option>Redesign / cleanup</option>
+            <option>Design review / debug</option>
+            <option>Enclosure / product design</option>
+            <option>Just a question</option>
+          </select>
+        </div>
+        <div class="ask-field">
+          <label for="q-layers">Layer count</label>
+          <select id="q-layers" name="layers">
+            <option>Not sure yet</option>
+            <option>1 &ndash; 2 layers</option>
+            <option>4 layers</option>
+            <option>6 layers</option>
+            <option>8+ layers</option>
+          </select>
+        </div>
+      </div>
+      <div class="ask-row">
+        <div class="ask-field">
+          <label for="q-qty">Expected quantity</label>
+          <select id="q-qty" name="quantity">
+            <option>Prototype (1 &ndash; 10)</option>
+            <option>10 &ndash; 100</option>
+            <option>100 &ndash; 1,000</option>
+            <option>1,000+</option>
+          </select>
+        </div>
+        <div class="ask-field">
+          <label for="q-time">Timeline</label>
+          <select id="q-time" name="timeline">
+            <option>Flexible</option>
+            <option>Under 2 weeks</option>
+            <option>2 &ndash; 4 weeks</option>
+            <option>1 &ndash; 3 months</option>
+          </select>
         </div>
       </div>
       <div class="ask-field">
-        <label for="ask-msg">Your question</label>
-        <textarea id="ask-msg" placeholder="e.g. I have a 4-layer ESP32 sensor board, can you take it from schematic to fab-ready Gerbers?"></textarea>
+        <label for="q-msg">Project details</label>
+        <textarea id="q-msg" name="message" placeholder="e.g. 4-layer ESP32 sensor board, schematic done in KiCad, need layout + fab-ready Gerbers. Attachments can follow by email." required></textarea>
       </div>
       <div class="ask-actions">
-        <button type="button" id="ask-send" class="btn btn-primary">Send question &rarr;</button>
-        <span class="ask-note">Opens your mail app, pre-filled.</span>
+        <button type="submit" id="ask-send" class="btn btn-primary">Send request &rarr;</button>
+        <span class="ask-note">Goes straight to the studio inbox. No account needed.</span>
       </div>
-    </div>
+      <div class="ask-status" id="ask-status"></div>
+    </form>
   </div>
 </section>
 
@@ -1116,23 +1264,48 @@ document.getElementById('yr').textContent = new Date().getFullYear();
 const nav = document.getElementById('nav');
 addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 40));
 document.getElementById('burger').addEventListener('click', () => nav.classList.toggle('open'));
-document.querySelectorAll('.navlinks a').forEach(a => a.addEventListener('click', () => nav.classList.remove('open')));
+document.querySelectorAll('.navlinks a, .nav-hire').forEach(a => a.addEventListener('click', () => nav.classList.remove('open')));
 const io = new IntersectionObserver(es => es.forEach(e => {
   if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
 }), { threshold: .1 });
 document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
-document.getElementById('ask-send').addEventListener('click', () => {
-  const name = document.getElementById('ask-name').value.trim();
-  const email = document.getElementById('ask-email').value.trim();
-  const msg = document.getElementById('ask-msg').value.trim();
-  const subject = encodeURIComponent('Question for Isal Electronics' + (name ? ' from ' + name : ''));
-  const body = encodeURIComponent(
-    (msg || '(your question here)') +
-    '\n\n---\nName: ' + (name || '-') +
-    '\nReply to: ' + (email || '-')
-  );
-  window.location.href = 'mailto:isalelectronics9@gmail.com?subject=' + subject + '&body=' + body;
+const qform = document.getElementById('quote-form');
+qform.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = document.getElementById('ask-send');
+  const status = document.getElementById('ask-status');
+  const data = new FormData(qform);
+  btn.disabled = true;
+  btn.innerHTML = 'Sending&hellip;';
+  try {
+    const res = await fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams(data).toString()
+    });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    qform.reset();
+    status.textContent = 'Sent. You will hear back within one business day.';
+    status.className = 'ask-status ok';
+  } catch (err) {
+    const subject = encodeURIComponent('Quote request for Isal Electronics' + (data.get('name') ? ' from ' + data.get('name') : ''));
+    const body = encodeURIComponent(
+      'Project type: ' + (data.get('project-type') || '-') +
+      '\nLayer count: ' + (data.get('layers') || '-') +
+      '\nQuantity: ' + (data.get('quantity') || '-') +
+      '\nTimeline: ' + (data.get('timeline') || '-') +
+      '\n\nDetails:\n' + (data.get('message') || '-') +
+      '\n\n---\nName: ' + (data.get('name') || '-') +
+      '\nReply to: ' + (data.get('email') || '-')
+    );
+    window.location.href = 'mailto:isalelectronics9@gmail.com?subject=' + subject + '&body=' + body;
+    status.textContent = 'Direct send unavailable here. Opening your mail app instead.';
+    status.className = 'ask-status warn';
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = 'Send request &rarr;';
+  }
 });
 </script>
 </body>
